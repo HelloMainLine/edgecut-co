@@ -1,0 +1,1429 @@
+<!DOCTYPE html>
+<html lang="en" data-tenant="brooklyn">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Edgecut &amp; Co. — Sharp lines. Honest cuts. Walk in, walk out fresh. Three locations: Brooklyn, LA, Madrid.">
+  <title>Edgecut &amp; Co. — Sharp Lines. Honest Cuts.</title>
+
+  <!-- Preconnect font origins -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <!-- Fonts: DM Serif Display + Inter -->
+  <link rel="preload" href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Inter:wght@400;500;600;700&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Inter:wght@400;500;600;700&display=swap"></noscript>
+
+  <!-- Design tokens -->
+  <link rel="stylesheet" href="./tokens.css">
+
+  <!-- Tenant context (runs before styles complete) -->
+  <script src="./tenant-context.js"></script>
+
+  <style>
+    /* ============================================================
+       Edgecut & Co. — Landing Page Styles
+       ============================================================ */
+
+    /* ---- Reset & Base ---- */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html {
+      scroll-behavior: smooth;
+      -webkit-text-size-adjust: 100%;
+    }
+
+    body {
+      font-family: var(--typography-body-md-fontFamily, Inter, system-ui, sans-serif);
+      font-size: var(--typography-body-md-fontSize, 0.9375rem);
+      line-height: var(--typography-body-md-lineHeight, 1.6);
+      color: var(--colors-on-surface, #1A1C1E);
+      background-color: var(--colors-primary, #1A1C1E);
+      overflow-x: hidden;
+    }
+
+    img {
+      max-width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    /* ---- Utility: visually hidden ---- */
+    .visually-hidden {
+      position: absolute;
+      width: 1px; height: 1px;
+      margin: -1px; padding: 0;
+      overflow: hidden;
+      clip: rect(0,0,0,0);
+      border: 0;
+    }
+
+    /* ---- Container ---- */
+    .container {
+      width: 100%;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 var(--spacing-lg, 24px);
+    }
+
+    @media (min-width: 1280px) {
+      .container { max-width: 1280px; padding: 0 var(--spacing-xl, 32px); }
+    }
+
+    /* ---- Section base ---- */
+    .section {
+      padding: var(--spacing-section, 96px) 0;
+    }
+
+    .section__title {
+      font-family: var(--typography-display-lg-fontFamily, "DM Serif Display", Georgia, serif);
+      font-size: var(--typography-display-lg-fontSize, 3rem);
+      font-weight: var(--typography-display-lg-fontWeight, 400);
+      line-height: var(--typography-display-lg-lineHeight, 1.1);
+      letter-spacing: var(--typography-display-lg-letterSpacing, -0.01em);
+      margin-bottom: var(--spacing-lg, 24px);
+    }
+
+    .section__subtitle {
+      font-size: var(--typography-headline-sm-fontSize, 1.125rem);
+      color: var(--colors-on-surface-dim, #6B6258);
+      max-width: 640px;
+      margin-bottom: var(--spacing-xxl, 48px);
+    }
+
+    /* ============================================================
+       Sticky Nav
+       ============================================================ */
+    .site-nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 1000;
+      background: rgba(26, 28, 30, 0.95);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+      transition: background 0.3s ease;
+    }
+
+    .site-nav__inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 64px;
+    }
+
+    .site-nav__logo {
+      display: flex;
+      align-items: center;
+      gap: var(--spacing-sm, 8px);
+      font-family: var(--typography-display-md-fontFamily, "DM Serif Display", Georgia, serif);
+      font-size: 1.35rem;
+      color: var(--colors-on-primary, #FFFFFF);
+      letter-spacing: -0.01em;
+    }
+
+    .site-nav__logo-icon {
+      width: 32px;
+      height: 32px;
+      background: var(--colors-secondary, #B8926B);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--colors-on-secondary, #1A1C1E);
+      font-family: "DM Serif Display", serif;
+      font-size: 1.1rem;
+      font-weight: 700;
+    }
+
+    .site-nav__links {
+      display: none;
+      align-items: center;
+      gap: var(--spacing-xs, 4px);
+      list-style: none;
+    }
+
+    .site-nav__link {
+      color: rgba(255,255,255,0.75);
+      padding: var(--spacing-sm, 8px) var(--spacing-md, 16px);
+      border-radius: var(--rounded-md, 8px);
+      font-family: var(--typography-title-md-fontFamily, Inter, system-ui, sans-serif);
+      font-size: var(--typography-title-md-fontSize, 0.875rem);
+      font-weight: 500;
+      letter-spacing: 0.02em;
+      transition: color 0.2s, background 0.2s;
+    }
+
+    .site-nav__link:hover,
+    .site-nav__link--active {
+      color: var(--colors-on-primary, #FFFFFF);
+      background: rgba(255,255,255,0.08);
+    }
+
+    .site-nav__cta {
+      background: var(--colors-secondary, #B8926B);
+      color: var(--colors-on-secondary, #1A1C1E) !important;
+      font-weight: 600;
+    }
+
+    .site-nav__cta:hover {
+      background: var(--colors-secondary-hover, #C9A683);
+    }
+
+    .site-nav__hamburger {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: var(--spacing-sm, 8px);
+    }
+
+    .site-nav__hamburger span {
+      display: block;
+      width: 24px;
+      height: 2px;
+      background: var(--colors-on-primary, #FFFFFF);
+      border-radius: 2px;
+      transition: transform 0.3s, opacity 0.3s;
+    }
+
+    /* Mobile nav open */
+    .site-nav--open .site-nav__links {
+      display: flex;
+      flex-direction: column;
+      position: absolute;
+      top: 64px; left: 0; right: 0;
+      background: rgba(26, 28, 30, 0.98);
+      backdrop-filter: blur(12px);
+      padding: var(--spacing-md, 16px);
+      gap: var(--spacing-xs, 4px);
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .site-nav--open .site-nav__link {
+      padding: var(--spacing-md, 16px);
+    }
+
+    .site-nav--open .site-nav__hamburger span:nth-child(1) {
+      transform: translateY(7px) rotate(45deg);
+    }
+    .site-nav--open .site-nav__hamburger span:nth-child(2) {
+      opacity: 0;
+    }
+    .site-nav--open .site-nav__hamburger span:nth-child(3) {
+      transform: translateY(-7px) rotate(-45deg);
+    }
+
+    @media (min-width: 768px) {
+      .site-nav__links { display: flex; }
+      .site-nav__hamburger { display: none; }
+    }
+
+    /* ============================================================
+       Hero Section
+       ============================================================ */
+    .hero {
+      position: relative;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      color: var(--colors-on-primary, #FFFFFF);
+      padding-top: 64px;
+    }
+
+    .hero__bg {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+    }
+
+    .hero-video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .hero-poster {
+      display: none;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .hero__overlay {
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+      background: linear-gradient(
+        135deg,
+        rgba(26, 28, 30, 0.85) 0%,
+        rgba(26, 28, 30, 0.50) 50%,
+        rgba(26, 28, 30, 0.75) 100%
+      );
+    }
+
+    .hero__content {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+      max-width: 800px;
+      padding: var(--spacing-xxl, 48px) var(--spacing-lg, 24px);
+    }
+
+    .hero__tagline {
+      display: inline-block;
+      font-family: var(--typography-label-md-fontFamily, Inter, system-ui, sans-serif);
+      font-size: var(--typography-label-md-fontSize, 0.8125rem);
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--colors-secondary, #B8926B);
+      margin-bottom: var(--spacing-lg, 24px);
+      border: 1px solid rgba(184, 146, 107, 0.3);
+      padding: var(--spacing-xs, 4px) var(--spacing-md, 16px);
+      border-radius: 9999px;
+    }
+
+    .hero__headline {
+      font-family: var(--typography-display-xl-fontFamily, "DM Serif Display", Georgia, serif);
+      font-size: clamp(2.5rem, 8vw, var(--typography-display-xl-fontSize, 4rem));
+      font-weight: var(--typography-display-xl-fontWeight, 400);
+      line-height: var(--typography-display-xl-lineHeight, 1.05);
+      letter-spacing: var(--typography-display-xl-letterSpacing, -0.02em);
+      margin-bottom: var(--spacing-lg, 24px);
+    }
+
+    .hero__headline em {
+      font-style: italic;
+      color: var(--colors-secondary, #B8926B);
+    }
+
+    .hero__subheading {
+      font-size: var(--typography-body-lg-fontSize, 1.0625rem);
+      font-weight: 400;
+      line-height: 1.6;
+      color: rgba(255,255,255,0.75);
+      margin-bottom: var(--spacing-xl, 32px);
+      max-width: 560px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .hero__cta {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--spacing-sm, 8px);
+      background: var(--colors-secondary, #B8926B);
+      color: var(--colors-on-secondary, #1A1C1E);
+      border: none;
+      border-radius: var(--rounded-md, 8px);
+      padding: var(--spacing-md, 16px) var(--spacing-xl, 32px);
+      height: 56px;
+      font-family: var(--typography-title-md-fontFamily, Inter, system-ui, sans-serif);
+      font-size: var(--typography-title-lg-fontSize, 1rem);
+      font-weight: 600;
+      letter-spacing: 0.02em;
+      cursor: pointer;
+      text-decoration: none;
+      transition: background 0.2s, transform 0.2s;
+    }
+
+    .hero__cta:hover {
+      background: var(--colors-secondary-hover, #C9A683);
+      transform: translateY(-2px);
+    }
+
+    .hero__cta:active {
+      transform: translateY(0);
+    }
+
+    .hero__cta svg {
+      width: 20px;
+      height: 20px;
+    }
+
+    .hero__scroll-indicator {
+      position: absolute;
+      bottom: var(--spacing-xl, 32px);
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 2;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: var(--spacing-xs, 4px);
+      color: rgba(255,255,255,0.4);
+      font-size: var(--typography-body-sm-fontSize, 0.8125rem);
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      animation: float 2.5s ease-in-out infinite;
+    }
+
+    .hero__scroll-indicator span {
+      width: 1px;
+      height: 32px;
+      background: linear-gradient(to bottom, rgba(255,255,255,0.4), transparent);
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateX(-50%) translateY(0); }
+      50% { transform: translateX(-50%) translateY(8px); }
+    }
+
+    /* ============================================================
+       Locations Section
+       ============================================================ */
+    .locations {
+      background: var(--colors-primary, #1A1C1E);
+      color: var(--colors-on-primary, #FFFFFF);
+    }
+
+    .locations .section__subtitle {
+      color: rgba(255,255,255,0.6);
+    }
+
+    .locations__grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: var(--spacing-lg, 24px);
+    }
+
+    @media (min-width: 768px) {
+      .locations__grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+
+    .location-card {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: var(--rounded-lg, 12px);
+      padding: var(--spacing-xl, 32px);
+      transition: background 0.3s, border-color 0.3s, transform 0.3s;
+    }
+
+    .location-card:hover {
+      background: rgba(255,255,255,0.07);
+      border-color: var(--colors-secondary, #B8926B);
+      transform: translateY(-4px);
+    }
+
+    .location-card__city {
+      font-family: var(--typography-display-md-fontFamily, "DM Serif Display", Georgia, serif);
+      font-size: var(--typography-display-md-fontSize, 2.25rem);
+      line-height: 1.15;
+      margin-bottom: var(--spacing-xs, 4px);
+    }
+
+    .location-card__neighborhood {
+      font-size: var(--typography-headline-sm-fontSize, 1.125rem);
+      font-weight: 500;
+      color: var(--colors-secondary, #B8926B);
+      margin-bottom: var(--spacing-md, 16px);
+    }
+
+    .location-card__address {
+      font-size: var(--typography-body-md-fontSize, 0.9375rem);
+      line-height: 1.6;
+      color: rgba(255,255,255,0.6);
+      margin-bottom: var(--spacing-md, 16px);
+      padding-bottom: var(--spacing-md, 16px);
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+
+    .location-card__vibe {
+      font-size: var(--typography-body-md-fontSize, 0.9375rem);
+      line-height: 1.6;
+      color: rgba(255,255,255,0.75);
+      margin-bottom: var(--spacing-lg, 24px);
+    }
+
+    .location-card__cta {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--spacing-sm, 8px);
+      color: var(--colors-secondary, #B8926B);
+      font-family: var(--typography-title-md-fontFamily, Inter, system-ui, sans-serif);
+      font-size: var(--typography-title-md-fontSize, 0.875rem);
+      font-weight: 600;
+      letter-spacing: 0.02em;
+      transition: gap 0.2s;
+    }
+
+    .location-card__cta:hover {
+      gap: var(--spacing-md, 16px);
+    }
+
+    .location-card__cta svg {
+      width: 16px;
+      height: 16px;
+    }
+
+    .location-card__map-placeholder {
+      width: 100%;
+      height: 100px;
+      background: rgba(255,255,255,0.03);
+      border-radius: var(--rounded-md, 8px);
+      margin-top: var(--spacing-md, 16px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: var(--typography-body-sm-fontSize, 0.8125rem);
+      color: rgba(255,255,255,0.3);
+      border: 1px dashed rgba(255,255,255,0.08);
+    }
+
+    /* ============================================================
+       Features Section
+       ============================================================ */
+    .features {
+      background: var(--colors-surface, #FAF7F4);
+      text-align: center;
+    }
+
+    .features__grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: var(--spacing-lg, 24px);
+    }
+
+    @media (min-width: 600px) {
+      .features__grid { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    @media (min-width: 1024px) {
+      .features__grid { grid-template-columns: repeat(3, 1fr); }
+    }
+
+    .feature-card {
+      background: var(--colors-surface, #FAF7F4);
+      border: 1px solid var(--colors-border-light, #E8E0D6);
+      border-radius: var(--rounded-lg, 12px);
+      padding: var(--spacing-xl, 32px);
+      text-align: left;
+      transition: box-shadow 0.3s, transform 0.3s;
+    }
+
+    .feature-card:hover {
+      box-shadow: var(--elevation-overlay, 0 4px 16px rgba(26,28,30,0.12));
+      transform: translateY(-4px);
+    }
+
+    .feature-card__icon {
+      width: 48px;
+      height: 48px;
+      border-radius: var(--rounded-md, 8px);
+      background: var(--colors-surface-alt, #F0EAE4);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: var(--spacing-md, 16px);
+    }
+
+    .feature-card__icon svg {
+      width: 24px;
+      height: 24px;
+      color: var(--colors-primary, #1A1C1E);
+    }
+
+    .feature-card__title {
+      font-family: var(--typography-headline-sm-fontFamily, Inter, system-ui, sans-serif);
+      font-size: var(--typography-headline-sm-fontSize, 1.125rem);
+      font-weight: 600;
+      line-height: 1.3;
+      margin-bottom: var(--spacing-sm, 8px);
+    }
+
+    .feature-card__desc {
+      font-size: var(--typography-body-md-fontSize, 0.9375rem);
+      line-height: 1.6;
+      color: var(--colors-on-surface-dim, #6B6258);
+    }
+
+    /* ============================================================
+       Testimonials Section
+       ============================================================ */
+    .testimonials {
+      background: var(--colors-primary, #1A1C1E);
+      color: var(--colors-on-primary, #FFFFFF);
+      text-align: center;
+    }
+
+    .testimonials__grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: var(--spacing-lg, 24px);
+      max-width: 960px;
+      margin: 0 auto;
+    }
+
+    @media (min-width: 768px) {
+      .testimonials__grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+
+    .testimonial-card {
+      text-align: left;
+      padding: var(--spacing-xl, 32px);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: var(--rounded-lg, 12px);
+      background: rgba(255,255,255,0.03);
+    }
+
+    .testimonial-card__stars {
+      color: var(--colors-rating, #E8A838);
+      font-size: 1rem;
+      margin-bottom: var(--spacing-md, 16px);
+      letter-spacing: 2px;
+    }
+
+    .testimonial-card__quote {
+      font-family: "DM Serif Display", Georgia, serif;
+      font-size: 1.125rem;
+      line-height: 1.5;
+      color: rgba(255,255,255,0.85);
+      margin-bottom: var(--spacing-md, 16px);
+      font-style: italic;
+    }
+
+    .testimonial-card__author {
+      font-size: var(--typography-body-sm-fontSize, 0.8125rem);
+      color: var(--colors-secondary, #B8926B);
+      font-weight: 500;
+    }
+
+    .testimonial-card__location {
+      font-size: var(--typography-body-sm-fontSize, 0.8125rem);
+      color: rgba(255,255,255,0.4);
+    }
+
+    /* ============================================================
+       CTA Band
+       ============================================================ */
+    .cta-band {
+      background: linear-gradient(135deg, var(--colors-primary, #1A1C1E) 0%, #2D3035 100%);
+      color: var(--colors-on-primary, #FFFFFF);
+      text-align: center;
+      padding: var(--spacing-section, 96px) 0;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .cta-band::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--colors-secondary, #B8926B), transparent);
+    }
+
+    .cta-band__headline {
+      font-family: var(--typography-display-lg-fontFamily, "DM Serif Display", Georgia, serif);
+      font-size: clamp(2rem, 5vw, var(--typography-display-lg-fontSize, 3rem));
+      font-weight: 400;
+      line-height: 1.1;
+      margin-bottom: var(--spacing-md, 16px);
+    }
+
+    .cta-band__sub {
+      font-size: var(--typography-body-lg-fontSize, 1.0625rem);
+      color: rgba(255,255,255,0.65);
+      margin-bottom: var(--spacing-xl, 32px);
+      max-width: 480px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .cta-band__actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--spacing-md, 16px);
+      justify-content: center;
+    }
+
+    .cta-band__btn {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--spacing-sm, 8px);
+      padding: var(--spacing-md, 16px) var(--spacing-xl, 32px);
+      height: 56px;
+      border-radius: var(--rounded-md, 8px);
+      font-family: var(--typography-title-md-fontFamily, Inter, system-ui, sans-serif);
+      font-size: var(--typography-title-lg-fontSize, 1rem);
+      font-weight: 600;
+      letter-spacing: 0.02em;
+      cursor: pointer;
+      text-decoration: none;
+      border: none;
+      transition: all 0.2s;
+    }
+
+    .cta-band__btn--primary {
+      background: var(--colors-secondary, #B8926B);
+      color: var(--colors-on-secondary, #1A1C1E);
+    }
+
+    .cta-band__btn--primary:hover {
+      background: var(--colors-secondary-hover, #C9A683);
+    }
+
+    .cta-band__btn--secondary {
+      background: transparent;
+      color: var(--colors-on-primary, #FFFFFF);
+      border: 1px solid rgba(255,255,255,0.2);
+    }
+
+    .cta-band__btn--secondary:hover {
+      background: rgba(255,255,255,0.06);
+      border-color: rgba(255,255,255,0.35);
+    }
+
+    /* ============================================================
+       Footer
+       ============================================================ */
+    .site-footer {
+      background: #0F1012;
+      color: rgba(255,255,255,0.6);
+      border-top: 1px solid rgba(255,255,255,0.06);
+      padding: var(--spacing-xxl, 48px) 0 var(--spacing-xl, 32px);
+    }
+
+    .site-footer__grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: var(--spacing-xl, 32px);
+    }
+
+    @media (min-width: 768px) {
+      .site-footer__grid {
+        grid-template-columns: 2fr 1fr 1fr 1fr;
+      }
+    }
+
+    .site-footer__brand {
+      font-family: "DM Serif Display", Georgia, serif;
+      font-size: 1.25rem;
+      color: var(--colors-on-primary, #FFFFFF);
+      margin-bottom: var(--spacing-sm, 8px);
+    }
+
+    .site-footer__tagline {
+      font-size: var(--typography-body-sm-fontSize, 0.8125rem);
+      color: rgba(255,255,255,0.4);
+      max-width: 280px;
+    }
+
+    .site-footer__heading {
+      font-family: var(--typography-title-md-fontFamily, Inter, system-ui, sans-serif);
+      font-size: var(--typography-title-md-fontSize, 0.875rem);
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: var(--colors-on-primary, #FFFFFF);
+      margin-bottom: var(--spacing-md, 16px);
+    }
+
+    .site-footer__links {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: var(--spacing-sm, 8px);
+    }
+
+    .site-footer__link {
+      font-size: var(--typography-body-sm-fontSize, 0.8125rem);
+      color: rgba(255,255,255,0.5);
+      transition: color 0.2s;
+    }
+
+    .site-footer__link:hover {
+      color: var(--colors-secondary, #B8926B);
+    }
+
+    .site-footer__social {
+      display: flex;
+      gap: var(--spacing-sm, 8px);
+    }
+
+    .site-footer__social-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: var(--rounded-md, 8px);
+      border: 1px solid rgba(255,255,255,0.08);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: border-color 0.2s, background 0.2s;
+    }
+
+    .site-footer__social-icon:hover {
+      border-color: var(--colors-secondary, #B8926B);
+      background: rgba(255,255,255,0.04);
+    }
+
+    .site-footer__social-icon svg {
+      width: 18px;
+      height: 18px;
+      color: rgba(255,255,255,0.5);
+    }
+
+    .site-footer__social-icon:hover svg {
+      color: var(--colors-secondary, #B8926B);
+    }
+
+    .site-footer__newsletter {
+      display: flex;
+      gap: var(--spacing-sm, 8px);
+    }
+
+    .site-footer__newsletter input {
+      flex: 1;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: var(--rounded-md, 8px);
+      padding: var(--spacing-sm, 8px) var(--spacing-md, 16px);
+      height: 44px;
+      color: var(--colors-on-primary, #FFFFFF);
+      font-family: var(--typography-body-md-fontFamily, Inter, system-ui, sans-serif);
+      font-size: var(--typography-body-md-fontSize, 0.9375rem);
+    }
+
+    .site-footer__newsletter input::placeholder {
+      color: rgba(255,255,255,0.3);
+    }
+
+    .site-footer__newsletter input:focus {
+      outline: none;
+      border-color: var(--colors-secondary, #B8926B);
+    }
+
+    .site-footer__newsletter button {
+      background: var(--colors-secondary, #B8926B);
+      color: var(--colors-on-secondary, #1A1C1E);
+      border: none;
+      border-radius: var(--rounded-md, 8px);
+      padding: var(--spacing-sm, 8px) var(--spacing-md, 16px);
+      height: 44px;
+      font-family: var(--typography-title-md-fontFamily, Inter, system-ui, sans-serif);
+      font-size: var(--typography-title-md-fontSize, 0.875rem);
+      font-weight: 600;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: background 0.2s;
+    }
+
+    .site-footer__newsletter button:hover {
+      background: var(--colors-secondary-hover, #C9A683);
+    }
+
+    .site-footer__bottom {
+      margin-top: var(--spacing-xl, 32px);
+      padding-top: var(--spacing-lg, 24px);
+      border-top: 1px solid rgba(255,255,255,0.06);
+      display: flex;
+      flex-direction: column;
+      gap: var(--spacing-sm, 8px);
+      text-align: center;
+      font-size: var(--typography-body-sm-fontSize, 0.8125rem);
+      color: rgba(255,255,255,0.3);
+    }
+
+    @media (min-width: 768px) {
+      .site-footer__bottom {
+        flex-direction: row;
+        justify-content: space-between;
+      }
+    }
+
+    /* ============================================================
+       Scroll Reveal
+       ============================================================ */
+    .reveal {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+
+    .reveal--visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ============================================================
+       Prefers Reduced Motion
+       ============================================================ */
+    @media (prefers-reduced-motion: reduce) {
+      .reveal { opacity: 1; transform: none; transition: none; }
+      .hero__scroll-indicator { animation: none; }
+      .location-card:hover { transform: none; }
+      .feature-card:hover { transform: none; }
+      .hero__cta:hover { transform: none; }
+    }
+
+    /* ============================================================
+       Prefers Contrast More — override tokens where needed
+       ============================================================ */
+    @media (prefers-contrast: more) {
+      .hero__subheading { color: rgba(255,255,255,0.9); }
+      .location-card__address { color: rgba(255,255,255,0.85); }
+      .location-card__vibe { color: rgba(255,255,255,0.9); }
+      .feature-card__desc { color: var(--colors-on-surface, #000000); }
+      .site-footer__link { color: rgba(255,255,255,0.75); }
+      .cta-band__sub { color: rgba(255,255,255,0.85); }
+      .site-nav { background: #000; backdrop-filter: none; }
+    }
+
+    /* ============================================================
+       Reduced Data: hero poster fallback (compliments token.css)
+       ============================================================ */
+    @media (prefers-reduced-data: reduce) {
+      .hero-video { display: none; }
+      .hero-poster { display: block; }
+    }
+
+    /* ============================================================
+       JS-Ready enhancement
+       ============================================================ */
+    .js-ready .site-nav {
+      transition: background 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .js-ready .site-nav--scrolled {
+      background: rgba(15, 16, 18, 0.98);
+      box-shadow: 0 2px 20px rgba(0,0,0,0.3);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ============================================================
+       Sticky Nav
+       ============================================================ -->
+  <nav class="site-nav" id="site-nav" role="navigation" aria-label="Main navigation">
+    <div class="container">
+      <div class="site-nav__inner">
+        <a href="#" class="site-nav__logo" aria-label="Edgecut &amp; Co. home">
+          <span class="site-nav__logo-icon">E</span>
+          Edgecut &amp; Co.
+        </a>
+
+        <ul class="site-nav__links" id="nav-links" role="list">
+          <li><a href="#locations" class="site-nav__link" data-nav="locations">Locations</a></li>
+          <li><a href="#features" class="site-nav__link" data-nav="features">Features</a></li>
+          <li><a href="#testimonials" class="site-nav__link" data-nav="testimonials">Reviews</a></li>
+          <li><a href="book.html" class="site-nav__link site-nav__cta">Book Now</a></li>
+        </ul>
+
+        <button class="site-nav__hamburger" id="nav-hamburger" aria-label="Toggle navigation menu" aria-expanded="false">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ============================================================
+       Hero Section
+       ============================================================ -->
+  <section class="hero" id="hero">
+    <div class="hero__bg">
+      <!-- Video: shown by default, hidden with prefers-reduced-data -->
+      <video class="hero-video" autoplay muted loop playsinline poster="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1920' height='1080' fill='%231A1C1E'%3E%3Crect width='1920' height='1080'/%3E%3C/svg%3E" aria-hidden="true">
+        <source src="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4" type="video/mp4">
+      </video>
+      <!-- Fallback poster: shown on reduced-data or when video fails -->
+      <img class="hero-poster"
+           src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1920' height='1080' fill='%231A1C1E'%3E%3Crect width='1920' height='1080'/%3E%3Crect x='720' y='240' width='480' height='600' fill='%232D3035' rx='12'/%3E%3Ccircle cx='960' cy='400' r='80' fill='%23B8926B'/%3E%3Cpath d='M860 420 l100-60 l100 60' fill='none' stroke='%23B8926B' stroke-width='3'/%3E%3C/svg%3E"
+           alt="Edgecut &amp; Co. barbershop interior"
+           onerror="this.src='data:image/svg+xml,%253Csvg xmlns=%2522http://www.w3.org/2000/svg%2522 width=%25221920%2522 height=%25221080%2522 fill=%2522%25231A1C1E%2522%253E%253Crect width=%25221920%2522 height=%25221080%2522/%253E%253C/svg%253E'">
+    </div>
+    <div class="hero__overlay"></div>
+
+    <div class="hero__content">
+      <p class="hero__tagline">Est. 2024 &middot; Three Cities</p>
+      <h1 class="hero__headline">
+        Sharp lines.<br><em>Honest cuts.</em><br>
+        Walk in, walk out fresh.
+      </h1>
+      <p class="hero__subheading">
+        No fluff. No fuss. Just expert barbers who know their craft.
+        Book your spot in seconds — Bedford-Stuy, Silver Lake, or Malasaña.
+      </p>
+      <a href="book.html" class="hero__cta">
+        Book Now
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M5 12h14m-7-7 7 7-7 7"/>
+        </svg>
+      </a>
+    </div>
+
+    <div class="hero__scroll-indicator" aria-hidden="true">
+      Scroll
+      <span></span>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       Locations Section
+       ============================================================ -->
+  <section class="section locations" id="locations">
+    <div class="container">
+      <div class="reveal">
+        <h2 class="section__title">Three cities. One standard.</h2>
+        <p class="section__subtitle">
+          Each shop dialed into its neighborhood — same sharp edges, same honest price.
+        </p>
+      </div>
+
+      <div class="locations__grid">
+        <!-- Brooklyn -->
+        <article class="location-card reveal" data-location="brooklyn">
+          <h3 class="location-card__city">Brooklyn</h3>
+          <p class="location-card__neighborhood">Bedford-Stuyvesant</p>
+          <p class="location-card__address">
+            432 Nostrand Ave<br>
+            Brooklyn, NY 11216<br>
+            <span style="color:var(--colors-secondary);font-weight:500;">Daily 9AM – 8PM</span>
+          </p>
+          <p class="location-card__vibe">
+            Brownstone energy meets precision work. Fade specialists, straight-razor finishes,
+            and the best conversation on the block. Walk-ins welcome, appointments preferred.
+          </p>
+          <a href="book.html?tenantId=brooklyn" class="location-card__cta">
+            Book Brooklyn
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M5 12h14m-7-7 7 7-7 7"/>
+            </svg>
+          </a>
+          <div class="location-card__map-placeholder" aria-label="Map showing 432 Nostrand Ave, Brooklyn">
+            <span>📍 432 Nostrand Ave, Brooklyn</span>
+          </div>
+        </article>
+
+        <!-- LA -->
+        <article class="location-card reveal" data-location="la">
+          <h3 class="location-card__city">Los Angeles</h3>
+          <p class="location-card__neighborhood">Silver Lake</p>
+          <p class="location-card__address">
+            2814 Sunset Blvd<br>
+            Los Angeles, CA 90026<br>
+            <span style="color:var(--colors-secondary);font-weight:500;">Daily 8AM – 9PM</span>
+          </p>
+          <p class="location-card__vibe">
+            Eastside cool meets old-school craft. Textured cuts, modern styles,
+            and a vinyl-spinning sound system. Stay for the cut, come back for the vibe.
+          </p>
+          <a href="book.html?tenantId=la" class="location-card__cta">
+            Book Silver Lake
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M5 12h14m-7-7 7 7-7 7"/>
+            </svg>
+          </a>
+          <div class="location-card__map-placeholder" aria-label="Map showing 2814 Sunset Blvd, Los Angeles">
+            <span>📍 2814 Sunset Blvd, LA</span>
+          </div>
+        </article>
+
+        <!-- Madrid -->
+        <article class="location-card reveal" data-location="madrid">
+          <h3 class="location-card__city">Madrid</h3>
+          <p class="location-card__neighborhood">Malasaña</p>
+          <p class="location-card__address">
+            Calle de la Palma 47<br>
+            28004 Madrid, Spain<br>
+            <span style="color:var(--colors-secondary);font-weight:500;">Lun–Sáb 10AM – 9PM</span>
+          </p>
+          <p class="location-card__vibe">
+            Donde el arte y la navaja se encuentran. Barbería de autor con corte clásico
+            y actitud contemporánea. Café solo servido con cada corte.
+          </p>
+          <a href="book.html?tenantId=madrid" class="location-card__cta">
+            Reservar Madrid
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M5 12h14m-7-7 7 7-7 7"/>
+            </svg>
+          </a>
+          <div class="location-card__map-placeholder" aria-label="Map showing Calle de la Palma 47, Madrid">
+            <span>📍 Calle de la Palma 47, Madrid</span>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       Features Section
+       ============================================================ -->
+  <section class="section features" id="features">
+    <div class="container">
+      <div class="reveal">
+        <h2 class="section__title">Everything you need.</h2>
+        <p class="section__subtitle" style="margin-left:auto;margin-right:auto;">
+          No gimmicks. Just a better way to get cut.
+        </p>
+      </div>
+
+      <div class="features__grid">
+        <article class="feature-card reveal">
+          <div class="feature-card__icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/>
+            </svg>
+          </div>
+          <h3 class="feature-card__title">Instant Booking</h3>
+          <p class="feature-card__desc">Pick your barber, pick your time, done in under 30 seconds. No account required — just show up.</p>
+        </article>
+
+        <article class="feature-card reveal">
+          <div class="feature-card__icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>
+            </svg>
+          </div>
+          <h3 class="feature-card__title">Real Availability</h3>
+          <p class="feature-card__desc">Live calendar syncs in real time. What you see is what's open — no cancelled bookings, no surprises.</p>
+        </article>
+
+        <article class="feature-card reveal">
+          <div class="feature-card__icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M9 12l2 2 4-4"/><path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20z"/>
+            </svg>
+          </div>
+          <h3 class="feature-card__title">Verified Reviews</h3>
+          <p class="feature-card__desc">Every review comes from a real booked appointment. No bots, no fluff — just honest feedback from real clients.</p>
+        </article>
+
+        <article class="feature-card reveal">
+          <div class="feature-card__icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+            </svg>
+          </div>
+          <h3 class="feature-card__title">7-Day Recut Guarantee</h3>
+          <p class="feature-card__desc">Not happy with your cut? Come back within 7 days for a complimentary touch-up. No questions asked.</p>
+        </article>
+
+        <article class="feature-card reveal">
+          <div class="feature-card__icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>
+            </svg>
+          </div>
+          <h3 class="feature-card__title">Your Barber's Portfolio</h3>
+          <p class="feature-card__desc">Browse each barber's work before you book. See their cuts, read their style notes, pick your match.</p>
+        </article>
+
+        <article class="feature-card reveal">
+          <div class="feature-card__icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/>
+            </svg>
+          </div>
+          <h3 class="feature-card__title">Multi-City</h3>
+          <p class="feature-card__desc">One profile, three cities. Book in Brooklyn today, Silver Lake next week, Madrid next month. Your cuts travel with you.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       Testimonials Section
+       ============================================================ -->
+  <section class="section testimonials" id="testimonials">
+    <div class="container">
+      <div class="reveal">
+        <h2 class="section__title">Don't take our word for it.</h2>
+        <p class="section__subtitle" style="margin-left:auto;margin-right:auto;color:rgba(255,255,255,0.5);">
+          Real cuts, real people, real talk.
+        </p>
+      </div>
+
+      <div class="testimonials__grid">
+        <blockquote class="testimonial-card reveal">
+          <div class="testimonial-card__stars" aria-label="5 out of 5 stars">★★★★★</div>
+          <p class="testimonial-card__quote">
+            "Best fade I've ever gotten — and I've lived in four cities. Miguel in Brooklyn
+            knows exactly what you want before you even say it."
+          </p>
+          <footer>
+            <cite class="testimonial-card__author">— Marcus T.</cite>
+            <span class="testimonial-card__location">Brooklyn • 12 cuts this year</span>
+          </footer>
+        </blockquote>
+
+        <blockquote class="testimonial-card reveal">
+          <div class="testimonial-card__stars" aria-label="5 out of 5 stars">★★★★★</div>
+          <p class="testimonial-card__quote">
+            "Edgecut Silver Lake is my spot. Booked online at 10am, in the chair by 10:15.
+            No waiting, no small talk if you don't want it. Perfect."
+          </p>
+          <footer>
+            <cite class="testimonial-card__author">— Dani R.</cite>
+            <span class="testimonial-card__location">Silver Lake • Regular since opening</span>
+          </footer>
+        </blockquote>
+
+        <blockquote class="testimonial-card reveal">
+          <div class="testimonial-card__stars" aria-label="5 out of 5 stars">★★★★★</div>
+          <p class="testimonial-card__quote">
+            "La mejor barbería de Malasaña. Corte impecable, ambiente relajado y el café
+            de bienvenida es un detallazo. Vuelvo cada mes."
+          </p>
+          <footer>
+            <cite class="testimonial-card__author">— Carlos M.</cite>
+            <span class="testimonial-card__location">Madrid • Cliente fiel</span>
+          </footer>
+        </blockquote>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       CTA Band
+       ============================================================ -->
+  <section class="cta-band" id="cta">
+    <div class="container">
+      <div class="reveal">
+        <h2 class="cta-band__headline">Ready to get sharp?</h2>
+        <p class="cta-band__sub">
+          First-timers get 10% off their first cut. No gimmicks — just great barbering.
+        </p>
+        <div class="cta-band__actions">
+          <a href="book.html" class="cta-band__btn cta-band__btn--primary">
+            Book Your Cut
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:18px;height:18px;">
+              <path d="M5 12h14m-7-7 7 7-7 7"/>
+            </svg>
+          </a>
+          <a href="#locations" class="cta-band__btn cta-band__btn--secondary">
+            Find a Location
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       Footer
+       ============================================================ -->
+  <footer class="site-footer" role="contentinfo">
+    <div class="container">
+      <div class="site-footer__grid">
+        <div>
+          <p class="site-footer__brand">Edgecut &amp; Co.</p>
+          <p class="site-footer__tagline">
+            Sharp lines. Honest cuts. Walk in, walk out fresh.<br>
+            &mdash; Brooklyn &bull; Los Angeles &bull; Madrid
+          </p>
+        </div>
+
+        <div>
+          <p class="site-footer__heading">Locations</p>
+          <ul class="site-footer__links">
+            <li><a href="book.html?tenantId=brooklyn" class="site-footer__link">Brooklyn</a></li>
+            <li><a href="book.html?tenantId=la" class="site-footer__link">Silver Lake</a></li>
+            <li><a href="book.html?tenantId=madrid" class="site-footer__link">Malasaña</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <p class="site-footer__heading">Company</p>
+          <ul class="site-footer__links">
+            <li><a href="#features" class="site-footer__link">Features</a></li>
+            <li><a href="#testimonials" class="site-footer__link">Reviews</a></li>
+            <li><a href="book.html" class="site-footer__link">Book Now</a></li>
+            <li><a href="#" class="site-footer__link">Careers</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <p class="site-footer__heading">Stay sharp</p>
+          <form class="site-footer__newsletter" onsubmit="event.preventDefault();alert('Thanks for subscribing!');">
+            <label for="newsletter-email" class="visually-hidden">Email address</label>
+            <input type="email" id="newsletter-email" placeholder="your@email.com" required>
+            <button type="submit">Join</button>
+          </form>
+          <div style="margin-top:var(--spacing-md,16px);">
+            <p class="site-footer__heading" style="margin-bottom:var(--spacing-sm,8px);">Follow us</p>
+            <div class="site-footer__social">
+              <a href="#" class="site-footer__social-icon" aria-label="Instagram">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/>
+                </svg>
+              </a>
+              <a href="#" class="site-footer__social-icon" aria-label="X / Twitter">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M4 4l11.733 16h4.267l-11.733 -16zM4 20l6.768 -6.768M20 4l-6.768 6.768"/>
+                </svg>
+              </a>
+              <a href="#" class="site-footer__social-icon" aria-label="TikTok">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5"/>
+                </svg>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="site-footer__bottom">
+        <span>&copy; 2024 Edgecut &amp; Co. All rights reserved.</span>
+        <span>Brooklyn &bull; Los Angeles &bull; Madrid</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ============================================================
+       JavaScript
+       ============================================================ -->
+  <script>
+    (function () {
+      'use strict';
+
+      // ---- JS-ready enhancement class ----
+      document.documentElement.classList.add('js-ready');
+
+      // ---- Hamburger toggle ----
+      const nav = document.getElementById('site-nav');
+      const hamburger = document.getElementById('nav-hamburger');
+      const navLinks = document.getElementById('nav-links');
+
+      if (hamburger && nav) {
+        hamburger.addEventListener('click', function () {
+          const isOpen = nav.classList.toggle('site-nav--open');
+          hamburger.setAttribute('aria-expanded', isOpen);
+        });
+
+        // Close on link click (mobile)
+        if (navLinks) {
+          navLinks.addEventListener('click', function (e) {
+            if (e.target.closest('.site-nav__link')) {
+              nav.classList.remove('site-nav--open');
+              hamburger.setAttribute('aria-expanded', 'false');
+            }
+          });
+        }
+      }
+
+      // ---- Scroll-spy / sticky nav shadow ----
+      let ticking = false;
+
+      function onScroll() {
+        if (!ticking) {
+          window.requestAnimationFrame(function () {
+            const scrollY = window.scrollY;
+            if (scrollY > 80) {
+              nav.classList.add('site-nav--scrolled');
+            } else {
+              nav.classList.remove('site-nav--scrolled');
+            }
+
+            // Active nav link based on scroll position
+            const sections = document.querySelectorAll('section[id]');
+            const navItems = document.querySelectorAll('[data-nav]');
+            let currentSection = '';
+
+            sections.forEach(function (section) {
+              const top = section.offsetTop - 120;
+              const bottom = top + section.offsetHeight;
+              if (scrollY >= top && scrollY < bottom) {
+                currentSection = section.getAttribute('id');
+              }
+            });
+
+            navItems.forEach(function (item) {
+              const target = item.getAttribute('data-nav');
+              if (target === currentSection) {
+                item.classList.add('site-nav__link--active');
+              } else {
+                item.classList.remove('site-nav__link--active');
+              }
+            });
+
+            ticking = false;
+          });
+          ticking = true;
+        }
+      }
+
+      window.addEventListener('scroll', onScroll, { passive: true });
+
+      // ---- Scroll Reveal via Intersection Observer ----
+      if ('IntersectionObserver' in window) {
+        const revealElements = document.querySelectorAll('.reveal');
+
+        // Check for reduced motion preference
+        const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+        if (!prefersReducedMotion) {
+          const observer = new IntersectionObserver(
+            function (entries) {
+              entries.forEach(function (entry) {
+                if (entry.isIntersecting) {
+                  entry.target.classList.add('reveal--visible');
+                  observer.unobserve(entry.target);
+                }
+              });
+            },
+            {
+              threshold: 0.15,
+              rootMargin: '0px 0px -40px 0px',
+            }
+          );
+
+          revealElements.forEach(function (el) {
+            observer.observe(el);
+          });
+        } else {
+          // Reduced motion: show all immediately
+          revealElements.forEach(function (el) {
+            el.classList.add('reveal--visible');
+            el.style.transition = 'none';
+            el.style.opacity = '1';
+            el.style.transform = 'none';
+          });
+        }
+      } else {
+        // No IntersectionObserver support: show all
+        document.querySelectorAll('.reveal').forEach(function (el) {
+          el.classList.add('reveal--visible');
+        });
+      }
+
+      // ---- Smooth scroll for anchor links (progressive enhancement) ----
+      document.addEventListener('click', function (e) {
+        var link = e.target.closest('a[href^="#"]');
+        if (link) {
+          var targetId = link.getAttribute('href').slice(1);
+          var target = document.getElementById(targetId);
+          if (target) {
+            e.preventDefault();
+            target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          }
+        }
+      });
+
+      // ---- Trigger initial scroll-spy ----
+      onScroll();
+
+      // ---- Console branding ----
+      console.log(
+        '%c✂️ Edgecut & Co.%c Sharp lines. Honest cuts.',
+        'font-family:"DM Serif Display",serif;font-size:1.5rem;color:#B8926B',
+        'font-family:Inter,sans-serif;font-size:1rem;color:#6B6258'
+      );
+    })();
+  </script>
+
+</body>
+</html>
